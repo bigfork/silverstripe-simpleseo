@@ -1,0 +1,24 @@
+{
+	"name": "bigfork/silverstripe-simpleseo",
+	"type": "silverstripe-module",
+	"description": "A simple SilverStripe SEO module offering easy to understand tips for CMS users",
+	"keywords": ["silverstripe", "seo", "meta", "metadata", "metatitle", "search"],
+	"authors": [
+		{
+			"name": "Loz Calver",
+			"email": "lozcalver@bigfork.co.uk"
+		}
+	],
+	"license": "BSD-3-Clause",
+	"require": {
+        "kinglozzer/metatitle": "^1"
+    },
+    "autoload": {
+		"psr-4": {
+			"Bigfork\\SilverStripeSimpleSEO\\": "src/"
+		}
+	},
+	"extra": {
+		"installer-name": "simpleseo"
+	}
+}

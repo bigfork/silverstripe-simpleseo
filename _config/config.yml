@@ -1,0 +1,9 @@
+---
+Before: 'metatitle/*'
+---
+SiteTree:
+  extensions:
+    - Bigfork\SilverStripeSimpleSEO\SimpleSEOExtension
+StringField:
+  extensions:
+    - Bigfork\SilverStripeSimpleSEO\StringFieldExtension

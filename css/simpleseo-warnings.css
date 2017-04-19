@@ -1,0 +1,47 @@
+
+.simpleseo-warnings__warning {
+	padding: 0.5em 0;
+	font-size: 12px;
+}
+
+.simpleseo-warnings__triangle {
+	position: relative;
+	display: inline-block;
+	width: 0; height: 0;
+	margin: -4px 0.25em 0 0;
+	border-style: solid;
+	border-width: 0 11px 20px 11px;
+	border-color: transparent;
+	vertical-align: middle;
+}
+
+.simpleseo-warnings__triangle:after {
+	position: absolute;
+	display: block;
+	top: 0; left: 50%;
+	content: '!';
+	color: black;
+	font-weight: bold;
+	font-family: Georgia, sans-serif;
+	transform: translate(-50%, 5px);
+}
+
+.simpleseo-warnings__triangle--warning {
+	border-bottom-color: #db6702;
+}
+
+.simpleseo-warnings__triangle--warning:after {
+	color: white;
+}
+
+.simpleseo-warnings__triangle--notice {
+	border-bottom-color: #f4e729;
+}
+
+.simpleseo-warnings__triangle--good {
+	border-bottom-color: #60ff70;
+}
+
+.simpleseo-warnings__triangle--good:after {
+	content: '✓';
+}
