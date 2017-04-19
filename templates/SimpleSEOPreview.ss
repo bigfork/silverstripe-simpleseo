@@ -15,7 +15,7 @@
                 <% if $MetaDescription %>
                     {$MetaDescription.LimitCharactersToClosestWordHTML(156)}
                 <% else %>
-                    {$Content.LimitCharactersToClosestWord(156)}
+                    {$ContentPreview.LimitCharactersToClosestWord(156)}
                 <% end_if %>
             </div>
         </div>

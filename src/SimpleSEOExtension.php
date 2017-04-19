@@ -61,4 +61,12 @@ class SimpleSEOExtension extends Extension
             LiteralField::create('SimpleSEOWarnings', $this->owner->renderWith('SimpleSEOWarnings'))
         );
     }
+
+    /**
+     * @return HTMLText|null
+     */
+    public function getContentPreview()
+    {
+        return $this->owner->dbObject('Content');
+    }
 }
