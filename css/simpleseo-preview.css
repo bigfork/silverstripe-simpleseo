@@ -25,10 +25,13 @@
 
 .simpleseo-preview__url {
 	display: block;
+	overflow: hidden;
 	height: 20px;
 	color: #062;
 	font-size: 14px;
 	line-height: 18px;
+	text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
 }
 
 .simpleseo-preview__content {
