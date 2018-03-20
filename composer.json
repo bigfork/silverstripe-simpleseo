@@ -19,7 +19,6 @@
 		}
 	},
 	"extra": {
-		"installer-name": "simpleseo",
 		"expose": [
 			"client/css",
 			"client/javascript"

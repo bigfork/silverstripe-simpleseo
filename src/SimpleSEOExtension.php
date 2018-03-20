@@ -22,9 +22,18 @@ class SimpleSEOExtension extends Extension
         Requirements::javascript('bigfork/silverstripe-simpleseo:client/javascript/SimpleSEOPreview.js');
         Requirements::javascript('bigfork/silverstripe-simpleseo:client/javascript/SimpleSEOWarnings.js');
 
+        $previewField = LiteralField::create('SimpleSEOPreview', $this->owner->renderWith('SimpleSEOPreview'));
+        $warningsField = LiteralField::create('SimpleSEOWarnings', $this->owner->renderWith('SimpleSEOWarnings'));
+
+        // Push preview field
+        $fields->addFieldToTab("Root.SEO", $previewField);
+
+        // Push warnings field
+        $fields->addFieldToTab("Root.SEO", $warningsField);
+
         // Move "Metadata" fields to new tab
         $metadataFields = $fields->fieldByName('Root.Main.Metadata')->getChildren();
-        $fields->removeByName('Metadata');
+        // $fields->removeByName('Metadata');
         $fields->addFieldsToTab('Root.SEO', $metadataFields);
 
         // Make "Description" field a TextField
@@ -48,18 +57,6 @@ class SimpleSEOExtension extends Extension
                 'Advanced Options',
                 $fields->dataFieldByName('ExtraMeta')
             )
-        );
-
-        // Push preview field
-        $fields->insertBefore(
-            'MetaTitle',
-            LiteralField::create('SimpleSEOPreview', $this->owner->renderWith('SimpleSEOPreview'))
-        );
-
-        // Push warnings field
-        $fields->insertBefore(
-            'MetaTitle',
-            LiteralField::create('SimpleSEOWarnings', $this->owner->renderWith('SimpleSEOWarnings'))
         );
     }
 
