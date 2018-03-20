@@ -9,6 +9,7 @@
 }
 
 .simpleseo-preview__title {
+	margin: 0;
 	overflow: hidden;
 	white-space: nowrap;
 	color: #100aab;
