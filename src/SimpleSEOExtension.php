@@ -2,12 +2,13 @@
 
 namespace Bigfork\SilverStripeSimpleSEO;
 
-use Extension;
-use FieldList;
-use LiteralField;
-use Requirements;
-use TextField;
-use ToggleCompositeField;
+use SilverStripe\Core\Extension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\ToggleCompositeField;
+use SilverStripe\Forms\LiteralField;
+
 
 class SimpleSEOExtension extends Extension
 {
@@ -16,10 +17,10 @@ class SimpleSEOExtension extends Extension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        Requirements::css(SIMPLESEO_DIR . '/css/simpleseo-preview.css');
-        Requirements::css(SIMPLESEO_DIR . '/css/simpleseo-warnings.css');
-        Requirements::javascript(SIMPLESEO_DIR . '/javascript/SimpleSEOPreview.js');
-        Requirements::javascript(SIMPLESEO_DIR . '/javascript/SimpleSEOWarnings.js');
+        Requirements::css('bigfork/silverstripe-simpleseo:client/css/simpleseo-preview.css');
+        Requirements::css('bigfork/silverstripe-simpleseo:client/css/simpleseo-warnings.css');
+        Requirements::javascript('bigfork/silverstripe-simpleseo:client/javascript/SimpleSEOPreview.js');
+        Requirements::javascript('bigfork/silverstripe-simpleseo:client/javascript/SimpleSEOWarnings.js');
 
         // Move "Metadata" fields to new tab
         $metadataFields = $fields->fieldByName('Root.Main.Metadata')->getChildren();

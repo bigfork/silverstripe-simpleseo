@@ -1,6 +1,6 @@
 {
 	"name": "bigfork/silverstripe-simpleseo",
-	"type": "silverstripe-module",
+	"type": "silverstripe-vendormodule",
 	"description": "A simple SilverStripe SEO module offering easy to understand tips for CMS users",
 	"keywords": ["silverstripe", "seo", "meta", "metadata", "metatitle", "search"],
 	"authors": [
@@ -11,7 +11,7 @@
 	],
 	"license": "BSD-3-Clause",
 	"require": {
-        "kinglozzer/metatitle": "^1"
+        "kinglozzer/metatitle": "^2"
     },
     "autoload": {
 		"psr-4": {
@@ -19,6 +19,10 @@
 		}
 	},
 	"extra": {
-		"installer-name": "simpleseo"
+		"installer-name": "simpleseo",
+		"expose": [
+			"client/css",
+			"client/javascript"
+		]
 	}
 }
