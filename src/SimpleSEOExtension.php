@@ -33,7 +33,7 @@ class SimpleSEOExtension extends Extension
 
         // Move "Metadata" fields to new tab
         $metadataFields = $fields->fieldByName('Root.Main.Metadata')->getChildren();
-        // $fields->removeByName('Metadata');
+        $fields->removeByName('Metadata');
         $fields->addFieldsToTab('Root.SEO', $metadataFields);
 
         // Make "Description" field a TextField
