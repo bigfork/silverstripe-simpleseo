@@ -2,7 +2,8 @@
 
 namespace Bigfork\SilverStripeSimpleSEO;
 
-use Extension;
+use SilverStripe\Core\Extension;
+
 
 class StringFieldExtension extends Extension
 {
