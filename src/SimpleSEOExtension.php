@@ -17,6 +17,12 @@ class SimpleSEOExtension extends Extension
      */
     public function updateCMSFields(FieldList $fields)
     {
+        // Check we have metadata fields to work with
+        $metadataHolder = $fields->fieldByName('Root.Main.Metadata');
+        if(!$metadataHolder) {
+          return;
+        }
+
         Requirements::css('bigfork/silverstripe-simpleseo:client/css/simpleseo-preview.css');
         Requirements::css('bigfork/silverstripe-simpleseo:client/css/simpleseo-warnings.css');
         Requirements::javascript('bigfork/silverstripe-simpleseo:client/javascript/SimpleSEOPreview.js');
@@ -32,7 +38,7 @@ class SimpleSEOExtension extends Extension
         $fields->addFieldToTab("Root.SEO", $warningsField);
 
         // Move "Metadata" fields to new tab
-        $metadataFields = $fields->fieldByName('Root.Main.Metadata')->getChildren();
+        $metadataFields = $metadataHolder->getChildren();
         $fields->removeByName('Metadata');
         $fields->addFieldsToTab('Root.SEO', $metadataFields);
 
