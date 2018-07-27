@@ -20,7 +20,7 @@ class SimpleSEOExtension extends Extension
         // Check we have metadata fields to work with
         $metadataHolder = $fields->fieldByName('Root.Main.Metadata');
         if(!$metadataHolder) {
-          return;
+            return;
         }
 
         Requirements::css('bigfork/silverstripe-simpleseo:client/css/simpleseo-preview.css');
