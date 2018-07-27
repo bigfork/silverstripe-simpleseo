@@ -4,6 +4,7 @@ namespace Bigfork\SilverStripeSimpleSEO;
 
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
@@ -67,10 +68,14 @@ class SimpleSEOExtension extends Extension
     }
 
     /**
-     * @return HTMLText|null
+     * @return DBHTMLText
      */
     public function getContentPreview()
     {
-        return $this->owner->dbObject('Content');
+        $preview = $this->owner->dbObject('Content');
+
+        $this->owner->invokeWithExtensions('updateContentPreview', $preview);
+
+        return $preview;
     }
 }
