@@ -2,17 +2,22 @@
 
 namespace Bigfork\SilverStripeSimpleSEO;
 
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\Forms\LiteralField;
 
-
 class SimpleSEOExtension extends Extension
 {
+    private static $has_one = [
+        'CanonicalPage' => SiteTree::class
+    ];
+
     /**
      * @param FieldList $fields
      */
@@ -50,21 +55,50 @@ class SimpleSEOExtension extends Extension
                 ->setRightTitle(
                     _t(
                         'SiteTree.METADESCHELP',
-                        'Search engines use this content for displaying search results
-                            (although it will not influence their ranking).'
+                        'Search engines use this content for displaying search results'
+                            . ' (although it will not influence their ranking).'
                     )
                 )
         );
 
+        $extraMeta = $fields->dataFieldByName('ExtraMeta');
+        $extraMeta->setRows(7);
+
         // Wrap "Custom meta tags" field in a ToggleCompositeField
         $fields->replaceField(
             'ExtraMeta',
-            ToggleCompositeField::create(
+            $advanced = ToggleCompositeField::create(
                 'ExtraMeta',
                 'Advanced Options',
-                $fields->dataFieldByName('ExtraMeta')
+                $extraMeta
             )
         );
+
+        // Insert canonical page option before custom meta tags
+        $advanced->unshift(
+            TreeDropdownField::create('CanonicalPageID', 'Canonical page', SiteTree::class)
+                ->setRightTitle(
+                    'Indicates to search engines that the selected page represents a “master” copy of this page'
+                )
+        );
+    }
+
+    /**
+     * @param array $tags
+     */
+    public function MetaComponents(array &$tags)
+    {
+        /** @var SiteTree $page */
+        $page = $this->owner->CanonicalPage();
+        if ($page->exists()) {
+            $tags['canonical'] = [
+                'tag' => 'link',
+                'attributes' => [
+                    'rel' => 'canonical',
+                    'href' => $page->AbsoluteLink()
+                ]
+            ];
+        }
     }
 
     /**
