@@ -2,7 +2,9 @@
 
 namespace Bigfork\SilverStripeSimpleSEO;
 
+use SilverStripe\CMS\Model\RedirectorPage;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\CMS\Model\VirtualPage;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
@@ -23,9 +25,14 @@ class SimpleSEOExtension extends Extension
      */
     public function updateCMSFields(FieldList $fields)
     {
+        // No SEO stuff available on redirector/virtual pages
+        if ($this->owner instanceof RedirectorPage || $this->owner instanceof VirtualPage) {
+            return;
+        }
+
         // Check we have metadata fields to work with
         $metadataHolder = $fields->fieldByName('Root.Main.Metadata');
-        if(!$metadataHolder) {
+        if (!$metadataHolder) {
             return;
         }
 
