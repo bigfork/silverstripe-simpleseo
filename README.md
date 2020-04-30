@@ -9,7 +9,7 @@ A simple SilverStripe SEO module offering easy to understand tips for CMS users,
 ### Composer
 
 ```
-require: "bigfork/silverstripe-simpleseo": "^1.0"
+require: "bigfork/silverstripe-simpleseo": "^2"
 ```
 
 ### Download
