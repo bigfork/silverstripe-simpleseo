@@ -20,7 +20,7 @@ class StringFieldExtension extends Extension
      */
     public function LimitCharactersToClosestWordHTML($limit = 20, $add = '...')
     {
-        $value = trim($this->owner->RAW());
+        $value = trim($this->owner->RAW() ?? '');
 
         if (mb_strlen($value) > $limit) {
             $value = mb_substr($value, 0, $limit);
