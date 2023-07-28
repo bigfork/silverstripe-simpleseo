@@ -11,7 +11,9 @@
 	],
 	"license": "BSD-3-Clause",
 	"require": {
-        "kinglozzer/metatitle": "^2"
+        "kinglozzer/metatitle": "^3",
+		"silverstripe/cms": "^5",
+		"silverstripe/framework": "^5"
     },
     "autoload": {
 		"psr-4": {
