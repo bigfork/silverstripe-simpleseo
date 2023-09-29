@@ -4,6 +4,9 @@ Before: 'metatitle/*'
 SilverStripe\CMS\Model\SiteTree:
   extensions:
     - Bigfork\SilverStripeSimpleSEO\SimpleSEOExtension
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - Bigfork\SilverStripeSimpleSEO\SimpleSEOSiteConfigExtension
 SilverStripe\ORM\FieldType\DBString:
   extensions:
     - Bigfork\SilverStripeSimpleSEO\StringFieldExtension

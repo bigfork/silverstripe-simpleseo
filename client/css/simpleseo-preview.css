@@ -8,6 +8,15 @@
 	font-family: arial, sans-serif;
 }
 
+.simpleseo-preview__image {
+	margin-bottom: 10px;
+}
+
+.simpleseo-preview__image img {
+	max-width: 100%;
+	height: auto;
+}
+
 .simpleseo-preview__title {
 	margin: 0;
 	overflow: hidden;
