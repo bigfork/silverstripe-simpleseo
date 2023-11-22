@@ -16,7 +16,7 @@
 		/**
 		 * Form field update triggers
 		 */
-		$('#Form_EditForm_Title, #Form_EditForm_MetaTitle').entwine({
+		$('#Form_EditForm_Title #Form_ItemEditForm_Title, #Form_EditForm_MetaTitle, #Form_ItemEditForm_MetaTitle').entwine({
 			oninput: function() {
 				$('.simpleseo-preview__title').update();
 			},
@@ -26,7 +26,7 @@
 			}
 		});
 
-		$('#Form_EditForm_Content, #Form_EditForm_MetaDescription').entwine({
+		$('#Form_EditForm_Content, #Form_ItemEditForm_Content, #Form_EditForm_MetaDescription, #Form_ItemEditForm_MetaDescription').entwine({
 			oninput: function() {
 				$('.simpleseo-preview__content').update();
 			},
@@ -43,14 +43,14 @@
 			MaxLength: 75,
 
 			getValue: function() {
-				return $('#Form_EditForm_MetaTitle').val() ||  $('#Form_EditForm_Title').val();
+				return $('#Form_EditForm_MetaTitle, #Form_ItemEditForm_MetaTitle').val() || $('#Form_EditForm_Title, #Form_ItemEditForm_Title').val();
 			},
 
 			update: function() {
 				var metatitle = this.getValue(),
 					target;
 
-				if ($('#Form_EditForm_MetaTitle').val()) {
+				if ($('#Form_EditForm_MetaTitle, #Form_ItemEditForm_MetaTitle').val()) {
 					$('.simpleseo-preview__field--title').hide();
 					$('.simpleseo-preview__field--metatitle').show();
 					target = $('.simpleseo-preview__field--metatitle span');
@@ -72,11 +72,11 @@
 			MaxLength: 160,
 
 			getValue: function() {
-				var value = $('#Form_EditForm_MetaDescription').val();
+				var value = $('#Form_EditForm_MetaDescription, #Form_ItemEditForm_MetaDescription').val();
 
 				// Try to grab a faux-description from the content, we have to crudely strip HTML from it...
 				if (!value) {
-					var htmlContent = $('#Form_EditForm_Content').val(),
+					var htmlContent = $('#Form_EditForm_Content, #Form_ItemEditForm_Content').val(),
 						tmpElement = $('<div />').html(htmlContent);
 
 					value = tmpElement.text();
