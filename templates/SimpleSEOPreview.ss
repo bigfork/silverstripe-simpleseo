@@ -7,7 +7,7 @@
                     <span>{$MetaTitle.LimitCharactersToClosestWordHTML(75)}</span>
                 </span>
                 <span class="simpleseo-preview__field simpleseo-preview__field--title"<% if $MetaTitle %> style="display: none"<% end_if %>>
-                    <span>{$Title}</span> &raquo; {$SiteConfig.Title}
+                    <span>{$Title}</span>
                 </span>
             </h1>
             <span class="simpleseo-preview__url">{$AbsoluteLink}</span>
