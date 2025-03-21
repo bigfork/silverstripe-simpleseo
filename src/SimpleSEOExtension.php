@@ -5,19 +5,32 @@ namespace Bigfork\SilverStripeSimpleSEO;
 use SilverStripe\CMS\Model\RedirectorPage;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\CMS\Model\VirtualPage;
+use SilverStripe\Control\Director;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\LinkField\Form\LinkField;
+use SilverStripe\LinkField\Models\ExternalLink;
+use SilverStripe\LinkField\Models\FileLink;
+use SilverStripe\LinkField\Models\Link;
+use SilverStripe\LinkField\Models\SiteTreeLink;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\Forms\LiteralField;
 
+/**
+ * @method Link CanonicalLink()
+ */
 class SimpleSEOExtension extends Extension
 {
-    private static $has_one = [
-        'CanonicalPage' => SiteTree::class
+    private static array $has_one = [
+        'CanonicalLink' => Link::class,
+    ];
+
+    private static array $owns = [
+        'CanonicalLink',
     ];
 
     /**
@@ -63,7 +76,7 @@ class SimpleSEOExtension extends Extension
                     _t(
                         'SiteTree.METADESCHELP',
                         'Search engines use this content for displaying search results'
-                            . ' (although it will not influence their ranking).'
+                        . ' (although it will not influence their ranking).'
                     )
                 )
         );
@@ -75,7 +88,7 @@ class SimpleSEOExtension extends Extension
         $fields->replaceField(
             'ExtraMeta',
             $advanced = ToggleCompositeField::create(
-                'ExtraMeta',
+                'ExdtraMeta',
                 'Advanced Options',
                 $extraMeta
             )
@@ -83,10 +96,16 @@ class SimpleSEOExtension extends Extension
 
         // Insert canonical page option before custom meta tags
         $advanced->unshift(
-            TreeDropdownField::create('CanonicalPageID', 'Canonical page', SiteTree::class)
+            LinkField::create('CanonicalLink', 'Canonical link')
+                ->setExcludeLinkTextField(true)
+                ->setAllowedTypes([
+                    SiteTreeLink::class,
+                    ExternalLink::class,
+                    FileLink::class,
+                ])
                 ->setRightTitle(
                     'Indicates to search engines that the selected page represents a “master” copy of this page'
-                )
+                ),
         );
     }
 
@@ -95,14 +114,14 @@ class SimpleSEOExtension extends Extension
      */
     public function MetaComponents(array &$tags)
     {
-        /** @var SiteTree $page */
-        $page = $this->owner->CanonicalPage();
-        if ($page->exists()) {
+        /** @var Link $link */
+        $link = $this->owner->CanonicalLink();
+        if ($link->exists()) {
             $tags['canonical'] = [
                 'tag' => 'link',
                 'attributes' => [
                     'rel' => 'canonical',
-                    'href' => $page->AbsoluteLink()
+                    'href' => Director::absoluteURL($link->getURL()),
                 ]
             ];
         }
