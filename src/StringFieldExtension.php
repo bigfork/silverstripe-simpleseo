@@ -4,12 +4,11 @@ namespace Bigfork\SilverStripeSimpleSEO;
 
 use SilverStripe\Core\Extension;
 
-
 class StringFieldExtension extends Extension
 {
-    private static $casting = array(
-        'LimitCharactersToClosestWordHTML' => 'Text'
-    );
+    private static array $casting = [
+        'LimitCharactersToClosestWordHTML' => 'Text',
+    ];
 
     /**
      * Limit characters to the closest word, but include HTML tags
@@ -18,7 +17,7 @@ class StringFieldExtension extends Extension
      * @param string $add Ellipsis to add to the end of truncated string
      * @return string
      */
-    public function LimitCharactersToClosestWordHTML($limit = 20, $add = '...')
+    public function LimitCharactersToClosestWordHTML(int $limit = 20, string $add = '...'): string
     {
         $value = trim($this->owner->RAW() ?? '');
 

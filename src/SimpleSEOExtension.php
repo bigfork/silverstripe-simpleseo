@@ -3,12 +3,13 @@
 namespace Bigfork\SilverStripeSimpleSEO;
 
 use SilverStripe\CMS\Model\RedirectorPage;
-use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\CMS\Model\VirtualPage;
 use SilverStripe\Control\Director;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\LinkField\Form\LinkField;
 use SilverStripe\LinkField\Models\ExternalLink;
 use SilverStripe\LinkField\Models\FileLink;
@@ -16,9 +17,6 @@ use SilverStripe\LinkField\Models\Link;
 use SilverStripe\LinkField\Models\SiteTreeLink;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
-use SilverStripe\Forms\TextField;
-use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\Forms\LiteralField;
 
 /**
  * @method Link CanonicalLink()
@@ -33,10 +31,7 @@ class SimpleSEOExtension extends Extension
         'CanonicalLink',
     ];
 
-    /**
-     * @param FieldList $fields
-     */
-    public function updateCMSFields(FieldList $fields)
+    public function updateCMSFields(FieldList $fields): void
     {
         // No SEO stuff available on redirector/virtual pages
         if ($this->owner instanceof RedirectorPage || $this->owner instanceof VirtualPage) {
@@ -66,7 +61,7 @@ class SimpleSEOExtension extends Extension
         // Move "Metadata" fields to new tab
         $metadataFields = $metadataHolder->getChildren();
         $fields->removeByName('Metadata');
-        $fields->addFieldsToTab('Root.SEO', $metadataFields);
+        $fields->addFieldsToTab('Root.SEO', $metadataFields->toArray());
 
         // Make "Description" field a TextField
         $fields->replaceField(
@@ -95,6 +90,7 @@ class SimpleSEOExtension extends Extension
         );
 
         // Insert canonical page option before custom meta tags
+        $fields->removeByName(['CanonicalLink']);
         $advanced->unshift(
             LinkField::create('CanonicalLink', 'Canonical link')
                 ->setExcludeLinkTextField(true)
@@ -112,7 +108,7 @@ class SimpleSEOExtension extends Extension
     /**
      * @param array $tags
      */
-    public function MetaComponents(array &$tags)
+    public function updateMetaComponents(array &$tags)
     {
         /** @var Link $link */
         $link = $this->owner->CanonicalLink();
